@@ -35,13 +35,27 @@ class ViewController: UIViewController {
         print("button got pressed")
         // diceImageView1.image = #imageLiteral(resourceName: "DiceFour")
         // diceImageView2.image = #imageLiteral(resourceName: "DiceFour")
-        diceImageView1.image =  [#imageLiteral(resourceName: "DiceOne"), #imageLiteral(resourceName: "DiceTwo"), #imageLiteral(resourceName: "DiceThree"), #imageLiteral(resourceName: "DiceFour"), #imageLiteral(resourceName: "DiceFive"), #imageLiteral(resourceName: "DiceSix")][leftDiceNumber]
-        diceImageView2.image =  [#imageLiteral(resourceName: "DiceOne"), #imageLiteral(resourceName: "DiceTwo"), #imageLiteral(resourceName: "DiceThree"), #imageLiteral(resourceName: "DiceFour"), #imageLiteral(resourceName: "DiceFive"), #imageLiteral(resourceName: "DiceSix")][rightDiceNumber]
+        
+        // random roll
+        leftDiceNumber = Int.random(in: 0...5)
+        rightDiceNumber = Int.random(in: 0...5)
+        
+        // note ... is inclusive
+        //       .. exclusive for last
+        // 1...3 = 1,2,3
+        // 1..3 = 1,2
+        
+        let diceArray = [#imageLiteral(resourceName: "DiceOne"), #imageLiteral(resourceName: "DiceTwo"), #imageLiteral(resourceName: "DiceThree"), #imageLiteral(resourceName: "DiceFour"), #imageLiteral(resourceName: "DiceFive"), #imageLiteral(resourceName: "DiceSix")]
+        
+        // can also use random element
+        diceImageView1.image =  diceArray.randomElement()
+        diceImageView2.image =  diceArray.randomElement()
         
         // can add in code to execute with \()
-        print("left is \(leftDiceNumber)")
-        leftDiceNumber = leftDiceNumber + 1
-        rightDiceNumber = rightDiceNumber + 1
+        // print("left is \(leftDiceNumber)")
+        // leftDiceNumber += 1
+        // rightDiceNumber += 1
+        
     }
 }
 
