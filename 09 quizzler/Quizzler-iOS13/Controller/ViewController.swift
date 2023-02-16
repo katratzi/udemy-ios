@@ -14,8 +14,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var oneButton: UIButton!
-    @IBOutlet weak var threeButton: UIButton!
     @IBOutlet weak var twoButton: UIButton!
+    @IBOutlet weak var threeButton: UIButton!
+    
     var quizBrain = QuizBrain()
     
     
