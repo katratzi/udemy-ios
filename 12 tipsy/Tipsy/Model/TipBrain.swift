@@ -26,10 +26,26 @@ struct TipBrain {
         split = splitAmount
     }
     
-    func calculateTip(){
+    func calculateTip() -> Float {
         if tip != nil && bill != nil && split != nil{
-            let finalTip = bill! * tip!
+            let finalTip = (bill! * tip!) / Float(split!)
             print(finalTip)
+            return finalTip
         }
+        else {
+            return 0.0
+        }
+    }
+    
+    func getSettings() -> String {
+        let splitString = String(split ?? 2)
+        print(splitString)
+        let tipString = String(format: "%.0f", tip! * 100)
+        print(tipString)
+        return "Split between \(splitString) people, with \(tipString)% tip"
+    }
+    
+    func getSplitTotal() -> String {
+        return String(String(format: "%.2f", calculateTip()))
     }
 }

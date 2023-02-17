@@ -9,6 +9,9 @@
 import UIKit
 
 class ResultViewController: UIViewController {
+    
+    var total : String = "0"
+    var setting : String = "none"
 
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var settingsLabel: UILabel!
@@ -17,7 +20,8 @@ class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        totalLabel.text = total
+        settingsLabel.text = setting
     }
     
     @IBAction func recalculatePressed(_ sender: UIButton) {

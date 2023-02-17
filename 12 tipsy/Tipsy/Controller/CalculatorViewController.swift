@@ -54,9 +54,7 @@ class CalculatorViewController: UIViewController {
         
         stopBillEditing()
         billTextField.endEditing(true)
-        
-        tipBrain.calculateTip()
-
+        _ = tipBrain.calculateTip()
     }
     
     
@@ -68,9 +66,21 @@ class CalculatorViewController: UIViewController {
     }
     
     @IBAction func calculatePressed(_ sender: UIButton) {
-        stopBillEditing()
-        //        performSegue(withIdentifier: "gotoResults", sender: self)
+        
+        performSegue(withIdentifier: "gotoResults", sender: self)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any? ) {
+
+        // showing results
+        if(segue.identifier == "gotoResults"){
+            var resultsView = segue.destination as! ResultViewController
+            resultsView.setting  = tipBrain.getSettings()
+            resultsView.total = tipBrain.getSplitTotal()
+        }
+    }
+    
+    
     
     func stopBillEditing(){
         billTextField.endEditing(true)
