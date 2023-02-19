@@ -18,9 +18,20 @@ struct WeatherManager {
             
             // 2. Create a session
             let session = URLSession(configuration: .default)
+            print(url)
             
             // 3. Give the session a task
-            let task = session.dataTask(with: url, completionHandler: handle(data: response: error: ))
+            // this uses a trailing closure
+            let task = session.dataTask(with: url) { data, response, error in
+                if error != nil{
+                    print(error!)
+                    return
+                }
+                
+                if let safeData = data {
+                    self.parseJSON(weatherData: safeData)
+                }
+            }
             
             // 4. Start the task
             task.resume()
@@ -29,15 +40,19 @@ struct WeatherManager {
         }
     }
     
-    func handle(data: Data?, response: URLResponse?, error: Error?) {
-        if error != nil{
-            print(error!)
-            return
-        }
+    
+    func parseJSON(weatherData: Data){
+        let decoder = JSONDecoder()
         
-        if let safeData = data {
-            let dataString = String(data: safeData, encoding: String.Encoding.utf8)
-            print(dataString!)
+        // decode can throw an error so wrap with do and try
+        do {
+            // use the .self to turn into a Type
+            let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
+            print(decodedData.name)
+            print(decodedData.main.temp)
+            print(decodedData.weather[0].description)
+        } catch {
+            print(error)
         }
     }
 }
