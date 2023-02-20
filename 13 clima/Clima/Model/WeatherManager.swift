@@ -1,15 +1,23 @@
 import Foundation
 
+protocol WeatherManagerDelegate {
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel)
+    func didFailWithError(error: Error)
+}
+
 struct WeatherManager {
+    
+    var delegate : WeatherManagerDelegate?
+    
     var url = "https://api.openweathermap.org/data/2.5/weather?appid=111&units=metric"
     
     func fetchWeather(cityName: String){
         let urlString = "\(url)&q=\(cityName)"
         print(urlString)
-        performRequest(urlString: urlString)
+        performRequest(with: urlString)
     }
     
-    func performRequest(urlString: String){
+    func performRequest(with urlString: String){
         
         let trimmed = urlString.trimmingCharacters(in: .whitespacesAndNewlines)
         
@@ -24,12 +32,15 @@ struct WeatherManager {
             // this uses a trailing closure
             let task = session.dataTask(with: url) { data, response, error in
                 if error != nil{
-                    print(error!)
+                    self.delegate?.didFailWithError(error: error!)
                     return
                 }
                 
                 if let safeData = data {
-                    self.parseJSON(weatherData: safeData)
+                    if let weather = self.parseJSON(safeData)
+                    {
+                        self.delegate?.didUpdateWeather(self,  weather: weather)
+                    }
                 }
             }
             
@@ -41,7 +52,7 @@ struct WeatherManager {
     }
     
     
-    func parseJSON(weatherData: Data){
+    func parseJSON(_ weatherData: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         
         // decode can throw an error so wrap with do and try
@@ -54,11 +65,11 @@ struct WeatherManager {
             
             let weather = WeatherModel (conditionId: id, cityName: name, temperature: temp)
             
-            print(weather.conditionName)
-            print(weather.temperatureString)
+            return weather
             
         } catch {
-            print(error)
+            self.delegate?.didFailWithError(error: error)
+            return nil
         }
     }
     
