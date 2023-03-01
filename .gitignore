@@ -7,4 +7,5 @@ xcuserdata/
 *.xcscmblueprint
 *.xccheckout
 Pods/
+/test game
 
