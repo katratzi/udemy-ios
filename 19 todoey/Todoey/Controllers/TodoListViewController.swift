@@ -10,16 +10,29 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
     
-    var itemArray = ["Find Mike", "Buy Milk", "Destory Demigod"]
+    var itemArray = [Item]()
     
     let userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let items = userDefaults.array(forKey: "TodoListArray") as? [String] {
-            itemArray = items
-        }
+        let newItem1 = Item()
+        newItem1.title = "Find Mike"
+        itemArray.append(newItem1)
+        
+        let newItem2 = Item()
+        newItem2.title = "Buy Shopping"
+        itemArray.append(newItem2)
+        
+        let newItem3 = Item()
+        newItem3.title = "Global Supremacy"
+        itemArray.append(newItem3)
+        
+        
+//        if let items = userDefaults.array(forKey: "TodoListArray") as? [String] {
+//            itemArray = items
+//        }
     }
     
     //MARK - Tableview Datasource Methods
@@ -33,7 +46,9 @@ class TodoListViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         
-        cell.textLabel?.text = itemArray[indexPath.row]
+        let item = itemArray[indexPath.row]
+        cell.textLabel?.text = item.title
+        cell.accessoryType = item.done ? .checkmark : .none
         
         return cell
     }
@@ -42,17 +57,12 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // add/remove checkmark
-        if let cell = tableView.cellForRow(at: indexPath)
-        {
-            if cell.accessoryType == .checkmark
-            {
-                cell.accessoryType = .none
-            }
-            else
-            {
-                cell.accessoryType = .checkmark
-            }
-        }
+        
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        
+        tableView.reloadData()
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     //MARK - Add Todo List items
@@ -68,7 +78,9 @@ class TodoListViewController: UITableViewController {
             
             // what will happen once the use clicks the add button
             print("Success" + textField.text!)
-            self.itemArray.append(textField.text!)
+            let newItem = Item()
+            newItem.title = textField.text!
+            self.itemArray.append(newItem)
             
             self.userDefaults.set(self.itemArray, forKey: "TodoListArray")
             
