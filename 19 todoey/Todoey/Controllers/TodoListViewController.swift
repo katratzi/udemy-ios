@@ -132,7 +132,7 @@ extension TodoListViewController : UISearchBarDelegate
 {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    
+        
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         
         let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
@@ -143,6 +143,21 @@ extension TodoListViewController : UISearchBarDelegate
         
         loadItems(with: request)
         
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        // search bar has been cleared
+        if(searchBar.text?.count == 0)
+        {
+            loadItems()
+            
+            DispatchQueue.main.async {
+                // this clears the keyboard and the text cursor, basically unselect
+                searchBar.resignFirstResponder()
+            }
+            
+        }
     }
 }
 
