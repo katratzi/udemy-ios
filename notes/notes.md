@@ -16,3 +16,13 @@ class Car {
 }
 
 let myCar = Car.singletonCar
+
+# Did Set
+
+var selectedCategory : Category? {
+    // this runs only when property is set
+    // useful for segues
+        didSet {
+            loadItems()
+        }
+    }
