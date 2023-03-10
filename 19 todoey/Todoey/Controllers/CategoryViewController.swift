@@ -102,5 +102,20 @@ class CategoryViewController: UITableViewController {
     //MARK: - TableView delegate methods
     // i.e. what happends when we click on a category
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "gotoItems", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // could also check segue identifier if we had miltiple paths
+        
+        let destinationVC = segue.destination as! TodoListViewController
+        if let indexPath = tableView.indexPathForSelectedRow
+        {
+            destinationVC.selectedCategory = categoryArray[indexPath.row]
+        }
+        
+    }
     
 }
