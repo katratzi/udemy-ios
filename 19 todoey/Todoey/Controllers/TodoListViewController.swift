@@ -59,8 +59,8 @@ class TodoListViewController: UITableViewController {
             
             do {
                 try realm.write {
-//                    item.done = !item.done
-                    realm.delete(item)
+                    item.done = !item.done
+//                    realm.delete(item)
                 }
             } catch {
                 print("error saving toggling, \(error)")
@@ -89,6 +89,7 @@ class TodoListViewController: UITableViewController {
                     try self.realm.write {
                         let newItem = Item()
                         newItem.title = textField.text!
+                        newItem.dateCreated = Date()
                         currentCategory.items.append(newItem)
                     }
                 } catch {
@@ -126,36 +127,29 @@ class TodoListViewController: UITableViewController {
 //MARK: - Search Bar Methods
 
 // Extend to handle the search bar
-//extension TodoListViewController : UISearchBarDelegate
-//{
-//
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//
-//        let request : NSFetchRequest<Item> = Item.fetchRequest()
-//
-//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-//        request.predicate = predicate
-//
-//        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
-//        request.sortDescriptors = [sortDescriptor]
-//
-//        loadItems(with: request, predicate: predicate)
-//
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//
-//        // search bar has been cleared
-//        if(searchBar.text?.count == 0)
-//        {
-//            loadItems()
-//
-//            DispatchQueue.main.async {
-//                // this clears the keyboard and the text cursor, basically unselect
-//                searchBar.resignFirstResponder()
-//            }
-//
-//        }
-//    }
-//}
+extension TodoListViewController : UISearchBarDelegate
+{
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+
+        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+        
+        tableView.reloadData()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+        // search bar has been cleared
+        if(searchBar.text?.count == 0)
+        {
+            loadItems()
+
+            DispatchQueue.main.async {
+                // this clears the keyboard and the text cursor, basically unselect
+                searchBar.resignFirstResponder()
+            }
+
+        }
+    }
+}
 
