@@ -55,18 +55,18 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // add/remove checkmark
         
-        // can also use the set value method
-        // itemArray[indexPath.row].setValue("completed", forKey: "title")
+        if let item = todoItems?[indexPath.row] {
+            
+            do {
+                try realm.write {
+                    item.done = !item.done
+                }
+            } catch {
+                print("error saving toggling, \(error)")
+            }
+        }
         
-        // itemArray[indexPath.row].done = !itemArray[indexPath.row].done
-        
-        // order is important...delete object first before removing from array
-//        context.delete(itemArray[indexPath.row])
-//        itemArray.remove(at: indexPath.row)
-        
-        
-        // have to save the context for the deletion to work
-//        saveItems()
+        tableView.reloadData()
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
