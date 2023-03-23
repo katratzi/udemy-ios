@@ -16,6 +16,8 @@
 		F76A77E829B7FFCD000A6425 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F76A77E629B7FFCD000A6425 /* DataModel.xcdatamodeld */; };
 		F76A77EC29B9F604000A6425 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A77EB29B9F604000A6425 /* CategoryViewController.swift */; };
 		F7F377AA29CBA57D001A3AB8 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F377A929CBA57D001A3AB8 /* Data.swift */; };
+		F7F377AC29CCE2A4001A3AB8 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F377AB29CCE2A4001A3AB8 /* Item.swift */; };
+		F7F377AE29CCE2AD001A3AB8 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F377AD29CCE2AD001A3AB8 /* Category.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		F76A77E729B7FFCD000A6425 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		F76A77EB29B9F604000A6425 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		F7F377A929CBA57D001A3AB8 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		F7F377AB29CCE2A4001A3AB8 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		F7F377AD29CCE2AD001A3AB8 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		FEFA193983C51D552BF2066A /* Pods_Todoey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Todoey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -100,6 +104,8 @@
 			children = (
 				F76A77E629B7FFCD000A6425 /* DataModel.xcdatamodeld */,
 				F7F377A929CBA57D001A3AB8 /* Data.swift */,
+				F7F377AD29CCE2AD001A3AB8 /* Category.swift */,
+				F7F377AB29CCE2A4001A3AB8 /* Item.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -240,7 +246,9 @@
 				F7F377AA29CBA57D001A3AB8 /* Data.swift in Sources */,
 				EB2BE4FE239524DB00FB933B /* TodoListViewController.swift in Sources */,
 				F76A77E829B7FFCD000A6425 /* DataModel.xcdatamodeld in Sources */,
+				F7F377AC29CCE2A4001A3AB8 /* Item.swift in Sources */,
 				EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */,
+				F7F377AE29CCE2AD001A3AB8 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,9 +8,12 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 class CategoryViewController: UITableViewController {
 
+    let realm = try! Realm()
+    
     var categoryArray = [Category]()
     
     let context = (UIApplication.shared.delegate as! AppDelegate)
@@ -43,10 +46,12 @@ class CategoryViewController: UITableViewController {
     
     //MARK: - Data Manipulation methods save/load
     
-    func saveCategories()
+    func save(category: Category)
     {
         do {
-            try context.save()
+            try realm.write {
+                realm.add(category)
+            }
         } catch {
             print(" Error saving context \(error)")
         }
@@ -55,16 +60,16 @@ class CategoryViewController: UITableViewController {
     }
     
     // provide a default value if no request is passed
-    func loadCategories(with request: NSFetchRequest<Category> = Category.fetchRequest())
+    func loadCategories()
     {
-        do {
-            categoryArray = try context.fetch(request)
-        } catch {
-            print("Error fetching data from context \(error)")
-        }
-        
-        tableView.reloadData()
-        
+////        do {
+////            categoryArray = try context.fetch(request)
+////        } catch {
+////            print("Error fetching data from context \(error)")
+////        }
+////
+////        tableView.reloadData()
+
     }
     
     //MARK: - Add new categories
@@ -80,11 +85,11 @@ class CategoryViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
             
             // what will happen once the use clicks the add button
-            let newCategory = Category(context: self.context)
+            let newCategory = Category()
             newCategory.name = textField.text!
             self.categoryArray.append(newCategory)
             
-            self.saveCategories()
+            self.save(category: newCategory)
             
         }
         
