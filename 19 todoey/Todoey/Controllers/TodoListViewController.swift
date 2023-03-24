@@ -14,7 +14,7 @@ class TodoListViewController: SwipeTableViewController {
     
     var todoItems : Results<Item>?
     let realm = try! Realm()
-    let categoryColor : UIColor?
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var selectedCategory : Category? {
         didSet {
@@ -29,6 +29,29 @@ class TodoListViewController: SwipeTableViewController {
         
         // print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
+        tableView.separatorStyle = .none
+        
+    }
+    
+    // called after view did load, just before it's seen
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if let colorHex = selectedCategory?.color {
+            
+            title = selectedCategory!.name
+
+            guard let navBar = navigationController?.navigationBar else {
+                fatalError("Navigation controller does not exist")
+            }
+            
+            if let navBarColor = UIColor(hexString: colorHex)
+            {
+                navBar.backgroundColor = navBarColor
+                searchBar.barTintColor = navBarColor
+                navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
+                navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:  ContrastColorOf(navBarColor, returnFlat: true)]
+            }
+        }
     }
     
     //MARK - Tableview Datasource Methods
@@ -49,7 +72,7 @@ class TodoListViewController: SwipeTableViewController {
             
             // set color
             let percent = CGFloat(indexPath.row) /  CGFloat(todoItems!.count)
-            if let color = FlatSkyBlue().darken(byPercentage: percent)
+            if let color = UIColor(hexString: selectedCategory!.color)?.darken(byPercentage: percent)
             {
                 cell.backgroundColor = color
                 cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
