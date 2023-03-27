@@ -49,6 +49,17 @@ class ViewController: UIViewController {
                 displayLabel.text = numValue
                 isFinishedTypingNumber = false
             } else {
+                // add a decimal place but check if its an int
+                if numValue == "."
+                {
+                    guard let currentDisplayValue = Double(displayLabel.text!) else {
+                        fatalError("Cannot convert display label to double for checking decimal")
+                    }
+                    let isInt = floor(currentDisplayValue) == currentDisplayValue
+                    if(!isInt){
+                        return
+                    }
+                }
                 displayLabel.text?.append(numValue)
             }
         }
