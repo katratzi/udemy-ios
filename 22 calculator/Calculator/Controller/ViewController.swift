@@ -14,6 +14,23 @@ class ViewController: UIViewController {
     
     private var isFinishedTypingNumber : Bool = true
     
+    private var calculator = CalculatorLogic( )
+    
+    override func viewDidLoad() {
+        // tuple access with number
+        let tuple1 = ("Rygel", 16)
+        print(tuple1.0) // "Rygel"
+        
+        // tuple access with name
+        let tuple2 = (name: "Angela", age: 12)
+        print(tuple2.name)
+        
+        // tuple data type declaration
+        let tuple3: (name: String, age: Int)
+        tuple3 = (name: "Angela", age: 12)
+        print(tuple3.name)
+    }
+    
     private var displayValue : Double {
         get {
             guard let currentDisplayValue = Double(displayLabel.text!) else {
@@ -33,11 +50,10 @@ class ViewController: UIViewController {
         
         
         if let calcMethod = sender.currentTitle {
-            let calculator = CalculatorLogic(number: displayValue)
-            guard let result = calculator.calculate(symbol: calcMethod) else {
-                fatalError("Result of calculation is nil")
+            calculator.setNumber(displayValue)
+            if let result = calculator.calculate(symbol: calcMethod) {
+                displayValue = result
             }
-            displayValue = result
         }
          
     }

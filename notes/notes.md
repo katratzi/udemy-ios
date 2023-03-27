@@ -68,5 +68,20 @@ var pizzaInInches : Int = 10 {
     }
 }
 
+# Tuples
+
+// tuple access with number
+let tuple1 = ("Rygel", 16)
+print(tuple1.0) // "Rygel"
+
+// tuple access with name
+let tuple2 = (name: "Angela", age: 12)
+print(tuple2.name)
+
+// tuple data type declaration
+let tuple3: (name: String, age: Int)
+tuple3 = (name: "Angela", age: 12)
+print(tuple3.name)
+
 
 
