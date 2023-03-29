@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F71F62FA29D3B61500BE7BE8 /* petImageClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = F71F62F929D3B61500BE7BE8 /* petImageClassifier.mlmodel */; };
 		F7A176C629D2497B00BBBAFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A176C529D2497B00BBBAFA /* AppDelegate.swift */; };
 		F7A176C829D2497B00BBBAFA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A176C729D2497B00BBBAFA /* SceneDelegate.swift */; };
 		F7A176CA29D2497B00BBBAFA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A176C929D2497B00BBBAFA /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F71F62F929D3B61500BE7BE8 /* petImageClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = petImageClassifier.mlmodel; path = "../../../25 createml/petImageClassifier.mlmodel"; sourceTree = "<group>"; };
 		F7A176C229D2497B00BBBAFA /* SeeFood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeeFood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7A176C529D2497B00BBBAFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F7A176C729D2497B00BBBAFA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				F7A176CE29D2497E00BBBAFA /* Assets.xcassets */,
 				F7A176D029D2497E00BBBAFA /* LaunchScreen.storyboard */,
 				F7A176D929D24A5700BBBAFA /* Inceptionv3.mlmodel */,
+				F71F62F929D3B61500BE7BE8 /* petImageClassifier.mlmodel */,
 				F7A176D329D2497E00BBBAFA /* Info.plist */,
 			);
 			path = SeeFood;
@@ -143,6 +146,7 @@
 			files = (
 				F7A176CA29D2497B00BBBAFA /* ViewController.swift in Sources */,
 				F7A176DA29D24A5700BBBAFA /* Inceptionv3.mlmodel in Sources */,
+				F71F62FA29D3B61500BE7BE8 /* petImageClassifier.mlmodel in Sources */,
 				F7A176C629D2497B00BBBAFA /* AppDelegate.swift in Sources */,
 				F7A176C829D2497B00BBBAFA /* SceneDelegate.swift in Sources */,
 			);

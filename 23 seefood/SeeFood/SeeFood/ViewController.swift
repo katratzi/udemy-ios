@@ -48,7 +48,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func detect(image: CIImage){
         
-        guard let model = try? VNCoreMLModel(for: Inceptionv3().model) else {
+        guard let model = try? VNCoreMLModel(for: petImageClassifier().model) else {
             fatalError("Load coreML Error")
         }
         
@@ -58,14 +58,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 fatalError("Model failed to process iamge")
             }
             
+            print(results)
+            
             // results are ordered by confidence
             if let firstResult = results.first
             {
-                if firstResult.identifier.contains("hotdog")
+                if firstResult.identifier.contains("Dog")
                 {
-                    self.navigationItem.title = "Hotdog!"
+                    self.navigationItem.title = "Dog!"
+                } else if firstResult.identifier.contains("Cat") {
+                    self.navigationItem.title = "Cat!"
+                } else if firstResult.identifier.contains("Rabbit") {
+                    self.navigationItem.title = "Rabbit!"
                 } else {
-                    self.navigationItem.title = "Not Hotdog!"
+                    self.navigationItem.title = "Not a pet!"
                 }
                 
                 print("Id. \(firstResult.identifier) Conf.\(firstResult.confidence)" )
