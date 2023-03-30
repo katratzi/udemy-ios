@@ -14,12 +14,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var sceneView: ARSCNView!
     
     var dotNodes = [SCNNode]()
+    var textNode = SCNNode()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set the view's delegate
         sceneView.delegate = self
+        sceneView.autoenablesDefaultLighting = true
         
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         
@@ -43,6 +45,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        // already placed 2 nodes, clear on 3rd touch
+        if dotNodes.count >= 2 {
+            for dot in dotNodes
+            {
+                dot.removeFromParentNode()
+            }
+            dotNodes = [SCNNode]()
+        }
         
         if let touchLocation = touches.first?.location(in: sceneView) {
             let hitTestResults = sceneView.hitTest(touchLocation, types: .featurePoint)
@@ -87,14 +98,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         let distance = sqrt(pow(a,2) + pow(b,2) + pow(c,2))
         
-        updateText(text: String(format: "%.2",distance), atPostion: end.position)
+        print(String(format: "%.2f",distance))
+        updateText(text: String(format: "%.2f",distance), atPostion: end.position)
     }
     
     func updateText(text: String, atPostion pos: SCNVector3){
         
+        // clear old
+        textNode.removeFromParentNode()
+        
         let textGeometry = SCNText(string: text, extrusionDepth: 1.0)
         textGeometry.firstMaterial?.diffuse.contents = UIColor.red
-        let textNode = SCNNode(geometry: textGeometry)
+        textNode = SCNNode(geometry: textGeometry)
         
         textNode.position = SCNVector3(pos.x,pos.y + 0.01,pos.z)
         textNode.scale = SCNVector3(0.01,0.01,0.01)
