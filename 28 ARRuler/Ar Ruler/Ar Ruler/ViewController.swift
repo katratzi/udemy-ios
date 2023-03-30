@@ -10,7 +10,7 @@ import SceneKit
 import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
-
+    
     @IBOutlet var sceneView: ARSCNView!
     
     override func viewDidLoad() {
@@ -28,7 +28,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-
+        
         // Run the view's session
         sceneView.session.run(configuration)
     }
@@ -42,9 +42,31 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        if let touch = touches.first {
-            print("touched")
+        if let touchLocation = touches.first?.location(in: sceneView) {
+            let hitTestResults = sceneView.hitTest(touchLocation, types: .featurePoint)
+            
+            if let hitResult = hitTestResults.first {
+                addDot(at: hitResult)
+            }
         }
     }
-
+    
+    func addDot(at hitResult: ARHitTestResult){
+        let sphere = SCNSphere(radius: 0.005)
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.red
+        sphere.materials = [material]
+        
+        let node = SCNNode(geometry: sphere)
+        
+        // position in world
+        let x = hitResult.worldTransform.columns.3.x
+        let y = hitResult.worldTransform.columns.3.y
+        let z = hitResult.worldTransform.columns.3.z
+        
+        node.position = SCNVector3(x,y,z)
+        
+        sceneView.scene.rootNode.addChildNode(node)
+    }
+    
 }
