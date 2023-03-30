@@ -42,16 +42,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         //        sceneView.scene.rootNode.addChildNode(node)
         
         
-        // Create a new scene for dice
-        let diceScene = SCNScene(named: "art.scnassets/diceCollada.scn")!
-        
-        if let diceNode = diceScene.rootNode.childNode(withName: "Dice", recursively: true) {
-            diceNode.position = SCNVector3(x: 0, y: 0, z: -0.1)
-            diceNode.scale = SCNVector3(1, 1, 1)
-            sceneView.scene.rootNode.addChildNode(diceNode)
-        } else {
-            print("dice not found")
-        }
+//        // Create a new scene for dice
+//        let diceScene = SCNScene(named: "art.scnassets/diceCollada.scn")!
+//
+//        if let diceNode = diceScene.rootNode.childNode(withName: "Dice", recursively: true) {
+//            diceNode.position = SCNVector3(x: 0, y: 0, z: -0.1)
+//            diceNode.scale = SCNVector3(1, 1, 1)
+//            sceneView.scene.rootNode.addChildNode(diceNode)
+//        } else {
+//            print("dice not found")
+//        }
         
         // Set the scene to the view
         // sceneView.scene = diceScene
@@ -88,10 +88,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let results = sceneView.hitTest(touchLocation, types: ARHitTestResult.ResultType.existingPlaneUsingExtent)
             
             // we hit something
-            if !results.isEmpty {
-                print("touched the plane")
-            } else {
-                print("touched somewhere else")
+            if let hitResult = results.first {
+                // Create a new scene for dice
+                let diceScene = SCNScene(named: "art.scnassets/diceCollada.scn")!
+                
+                // place in world...and get the world position from the 4x4 matrix
+                if let diceNode = diceScene.rootNode.childNode(withName: "Dice", recursively: true) {
+                    diceNode.position = SCNVector3(
+                        x: hitResult.worldTransform.columns.3.x,
+                        y: hitResult.worldTransform.columns.3.y + diceNode.boundingSphere.radius,
+                        z: hitResult.worldTransform.columns.3.z)
+                    sceneView.scene.rootNode.addChildNode(diceNode)
+                } else {
+                    print("dice not found")
+                }
             }
         }
     }
