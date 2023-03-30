@@ -47,7 +47,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         if let diceNode = diceScene.rootNode.childNode(withName: "Dice", recursively: true) {
             diceNode.position = SCNVector3(x: 0, y: 0, z: -0.1)
-            diceNode.scale = SCNVector3(10, 10, 10)
+            diceNode.scale = SCNVector3(1, 1, 1)
             sceneView.scene.rootNode.addChildNode(diceNode)
         } else {
             print("dice not found")
@@ -77,6 +77,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Pause the view's session
         sceneView.session.pause()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // check we actually had touches
+        if let touch = touches.first
+        {
+            let touchLocation = touch.location(in: sceneView)
+            
+            let results = sceneView.hitTest(touchLocation, types: ARHitTestResult.ResultType.existingPlaneUsingExtent)
+            
+            // we hit something
+            if !results.isEmpty {
+                print("touched the plane")
+            } else {
+                print("touched somewhere else")
+            }
+        }
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
