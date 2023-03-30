@@ -99,8 +99,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                         y: hitResult.worldTransform.columns.3.y + diceNode.boundingSphere.radius,
                         z: hitResult.worldTransform.columns.3.z)
                     sceneView.scene.rootNode.addChildNode(diceNode)
-                } else {
-                    print("dice not found")
+                    
+                    // random side to roll
+                    arc4random_stir()
+                    let randomX = Float(arc4random_uniform(4) + 1) * (Float.pi/2)
+                    let randomZ = Float(arc4random_uniform(4) + 1) * (Float.pi/2)
+                    
+                    diceNode.runAction(SCNAction.rotateBy(
+                        x: CGFloat(randomX),
+                        y: 0,
+                        z: CGFloat(randomZ),
+                        duration: 0.5))
                 }
             }
         }
