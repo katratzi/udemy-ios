@@ -89,6 +89,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         rollAll()
     }
     
+    @IBAction func removeAllDice(_ sender: UIBarButtonItem) {
+    
+        if !diceArray.isEmpty {
+            for dice in diceArray
+            {
+                dice.removeFromParentNode()
+            }
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // check we actually had touches
         if let touch = touches.first
