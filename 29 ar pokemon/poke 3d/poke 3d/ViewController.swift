@@ -22,6 +22,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
+        // let there be light
+        sceneView.autoenablesDefaultLighting = true
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,6 +63,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // did we detect an image anchor
         if let imageAnchor = anchor as? ARImageAnchor {
             
+            
+            
             let plane = SCNPlane(
                 width: imageAnchor.referenceImage.physicalSize.width,
                 height: imageAnchor.referenceImage.physicalSize.height)
@@ -70,6 +75,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             planeNode.eulerAngles.x = -Float.pi/2
             
             node.addChildNode(planeNode)
+            
+            // which model should be loaded
+            let model = imageAnchor.name == "eevee-card" ? "eevee" : "oddish"
+            
+            // add our 3d model and orientate
+            let pokeScene = SCNScene(named: "art.scnassets/\(model).scn")!
+            let pokeNode = pokeScene.rootNode.childNode(withName: model, recursively: true)!
+            pokeNode.eulerAngles.x = Float.pi/2
+            
+            planeNode.addChildNode(pokeNode)
         }
         
         
