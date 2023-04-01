@@ -53,12 +53,34 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
 
+        // we found our image anchor
         if let planeAnchor = anchor as? ARImageAnchor {
-            print("found image")
+            
+            // load and play our video
+            let videoNode = SKVideoNode(fileNamed: "harrypotter.mp4")
+            videoNode.play()
+            
+            
+            
+            // video resolution for size
+            let videoScene = SKScene(size: CGSize(width: 640, height: 360))
+            
+            videoNode.position = CGPoint(
+                x: videoScene.size.width/2,
+                y: videoScene.size.height/2)
+            videoNode.yScale = -1 // flip the video so it's the right way up
+            
+            videoScene.addChild(videoNode)
+            
+            // create a plane in our view
             let plane = SCNPlane(
                 width: planeAnchor.referenceImage.physicalSize.width,
-                height: planeAnchor.referenceImage.physicalSize.width)
-            plane.firstMaterial?.diffuse.contents = UIColor(white: 1.0, alpha: 0.5)
+                height: planeAnchor.referenceImage.physicalSize.height)
+            
+            // plane white material
+//            plane.firstMaterial?.diffuse.contents = UIColor(white: 1.0, alpha: 0.5)
+            // use video scene as material
+            plane.firstMaterial?.diffuse.contents = videoScene
             
             // add node on top
             let planeNode = SCNNode(geometry: plane)
